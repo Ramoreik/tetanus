@@ -1,0 +1,29 @@
+---
+name: Tetanus
+version: "0.1.0"
+about: Experimental reverse shell in Rust.
+subcommands:
+  - client:
+      about: Starts a bash reverse shell to the specified host/port.
+      version: "0.0.1"
+      args:
+        - host:
+            short: h
+            long: host
+            value_name: <HOST>
+            help: Specify which host to send the shell to.
+            takes_value: true
+            required: true
+        - port:
+            short: p
+            long: port
+            value_name: <PORT>
+            help: Specify the port to send the shell to.
+            takes_value: true
+            required: true
+        - command:
+            short: c
+            long: command
+            value_name: <COMMAND>
+            help: Specify the command that will run and be sent back (/bin/bash by default).
+            takes_value: true

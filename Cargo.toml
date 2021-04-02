@@ -1,9 +1,9 @@
 [package]
-
-name = "tetnus"
+name = "tetanus"
 version = "0.1.0"
-authors = ["Avery Wagar <avery@wagar.cc>"]
+authors = ["Avery Wagar <avery@wagar.cc>", "Charl-Alxandre Le Brun <charl-alexandre@ramoreik.com>"]
 
 [dependencies]
+clap = {version = "2.33.3", features = ["yaml"]}
 socket2 = { version = "0.3.8" }
 tokio = "*"
