@@ -4,7 +4,7 @@ version: "0.1.0"
 about: Experimental reverse shell in Rust.
 subcommands:
   - client:
-      about: Starts a bash reverse shell to the specified host/port.
+      about: Launches the specified program through a socket to the specified host/port.
       version: "0.0.1"
       args:
         - host:
@@ -27,3 +27,22 @@ subcommands:
             value_name: <COMMAND>
             help: Specify the command that will run and be sent back (/bin/bash by default).
             takes_value: true
+
+  - listener:
+      about: Starts Tetanus in listening mode to receive a connection.
+      version: "0.0.1"
+      args:
+        - interface:
+            short: i
+            long: interface
+            value_name: <INTERFACE>
+            takes_value: true
+            help: Specify the interface to listen on.
+        - port:
+            short: p
+            long: port
+            value_name: <PORT>
+            takes_value: true
+            required: true
+            help: Specify the port to listen on.
+

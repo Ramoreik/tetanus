@@ -3,6 +3,7 @@ extern crate clap;
 extern crate tokio;
 use clap::App;
 use std::error::Error;
+use std::net::TcpListener;
 
 
 #[cfg(unix)]
@@ -10,6 +11,7 @@ mod unix_shell;
 
 #[cfg(windows)]
 mod windows_shell;
+
 
 fn client(host: String, port: String, command: String) -> Result<(), Box<dyn Error>>{
     if cfg!(target_os = "windows"){
@@ -22,6 +24,22 @@ fn client(host: String, port: String, command: String) -> Result<(), Box<dyn Err
     };
     Ok(())
 }
+
+
+fn listener(interface: String, port: String) -> Result<(), Box<dyn Error>> {
+    let listening_addr = [interface, port].join(":");
+    println!("[*] Starting listener on: //{}.", listening_addr );
+    let s = TcpListener::bind(listening_addr)?;
+    match s.accept() {
+        Ok((_socket, addr)) => {
+            println!("new client: {:?}", addr);
+            println!("WIP");
+        },
+        Err(e) => println!("couldn't get client: {:?}", e),
+    }
+    Ok(())
+}
+
 
 fn main() -> Result<(), Box<dyn Error>> {
     let yaml = load_yaml!("cli.yml");
@@ -41,5 +59,20 @@ fn main() -> Result<(), Box<dyn Error>> {
             },
         }
     }
+
+    // Handle listener subcommand
+    if let Some(matches) = matches.subcommand_matches("listener"){
+        let port: String = String::from(matches.value_of("port").unwrap());
+        let interface: Option<&str> = matches.value_of("interface");
+        match interface {
+            Some(interface) => {
+                listener(String::from(interface), port)?;
+            },
+            None => {
+                listener(String::from("0.0.0.0"), port)?;
+            }
+        }
+    }
+
     Ok(())
 }
